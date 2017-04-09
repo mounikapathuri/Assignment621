@@ -1,0 +1,105 @@
+package Assignment62;
+import java.util.Scanner;
+class BankATMException extends Exception {
+	private static final long serialVersionUID = 1L;
+	String msg;
+	 public BankATMException(String msg){
+		this.msg=msg;
+	 }
+	 public String toString()
+	    {
+	        return msg;
+	    }
+}
+class BankATMExceptionDep extends Exception {
+	private static final long serialVersionUID = 1L;
+		String msg1;
+		 public BankATMExceptionDep(String msg1){
+			this.msg1=msg1;
+		 }
+		 public String toString()
+		    {
+		        return msg1;
+		    }
+	 }
+public class bankAtm {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		checkAtm ca=new checkAtm();
+		ca.details();
+		System.out.println("current balance :"+ca.balance());
+		System.out.println(" enter withdrawing amount: ");
+		double atm=sc.nextDouble();
+		ca.withdraw(atm);
+		checkAtm ca1=new checkAtm();
+		System.out.println("current balance :"+ca1.balance());
+		System.out.println(" enter withdrawing amount: ");
+		double atm2=sc.nextDouble();
+		ca1.withdraw(atm2);
+		checkAtm ca2=new checkAtm();
+		System.out.println("current balance :"+ca2.balance());
+		System.out.println(" enter withdrawing amount: ");
+		double atm4=sc.nextDouble();
+		ca2.withdraw(atm4);
+		sc.close();
+		}
+		}
+
+class checkAtm{
+	int atmId;
+	String bankName;
+	String location;
+	private static double balance=10000;
+	double toDraw;
+	double toDep;
+	Scanner sc=new Scanner(System.in);
+	public void details(){
+		System.out.println("Enter atmId :");
+		atmId=sc.nextInt();
+		System.out.println("Enter bankName :");
+		bankName=sc.next();
+		System.out.println("Enter location :");
+		location=sc.next();
+		System.out.println("atmId :"+atmId);
+		System.out.println("bankName :"+bankName);
+		System.out.println("location :"+location);
+	}
+	 public double balance() {
+	        return balance;
+	    }
+	public void withdraw(double amt){
+		toDraw=amt;
+		try{
+			if(toDraw>balance || balance<10000){
+				throw new BankATMException("please deposit some amunt in ur account");	
+		}
+			else{
+				balance=balance-toDraw;
+				System.out.println("the balance is : "+balance+" you are unable to withdraw");
+				System.out.println("You should maintain minimum balance of 10000 in your account ");
+			}
+		}
+		catch(BankATMException e){
+			System.out.println(e);
+		}
+	}
+	void deposit(double amt1){
+		toDep=amt1;
+			try{
+				if(toDep<0){
+				throw new BankATMExceptionDep("please deposit atleast 100");	
+		}
+				else{
+					balance=balance+toDep;
+					System.out.println("the balance is : "+balance);
+				}
+			}
+		catch(BankATMExceptionDep m){
+			System.out.println(m);
+		}	
+		}
+	}
+
+ 
+
